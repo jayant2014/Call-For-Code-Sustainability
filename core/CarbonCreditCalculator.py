@@ -18,9 +18,13 @@ class CarbonCreditCalculator:
 
     def calculate_carbon_credits(self, material_type, quantity):
         if material_type in self.conversion_factors:
-            conversion_factor = self.conversion_factors[material_type]
-            carbon_credits = quantity * conversion_factor
-            return carbon_credits
+            data = self.conversion_factors[material_type]
+            recyclability = data['recyclability']
+            emissions_saved_per_kg = data['emissions_saved_per_kg']
+
+            # Calculate emissions saved based on recyclability and quantity
+            emissions_saved = quantity * recyclability * emissions_saved_per_kg
+            return emissions_saved
         else:
             return 0
 
