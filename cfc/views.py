@@ -1,0 +1,235 @@
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from django.template import context
+
+from .forms import ImageUploadForm
+from .forms import SignUpForm
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            # Check if a user with the given email already exists
+            if User.objects.filter(email=email).exists():
+                messages.error(request, 'A user with this email address already exists.')
+            else:
+                user = form.save()  # This saves the user data to the database
+                messages.success(request, 'Welcome! Your account has been created successfully.')
+                login(request, user)  # Log the user in after successful signup
+                return redirect('home')  # Redirect to the home page after signup
+        else:
+            # If form is not valid, display specific error messages
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'Error in {field}: {error}')
+    else:
+        form = SignUpForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
+
+
+
+# def user_login(request):
+#     if request.method == 'POST':
+#         email = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, email=email, password=password)
+#         if user:
+#             login(request, user)
+#             return redirect('registration/home1.html')
+#     return render(request, 'registration/login.html')
+
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+
+
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
+
+
+# def user_login(request):
+#     if request.method == 'POST':
+#         email = request.POST['email']  # 'email' corresponds to the name attribute in the form input field
+#         password = request.POST['password']
+#         user = authenticate(request, email=email, password=password)
+#         if user:
+#             login(request, user)
+#             return redirect('home')  # Redirect to the home page after successful login
+#         else:
+#             messages.error(request, 'Invalid email or password. Please try again.')  # Display error message
+#     return render(request, 'registration/login.html')
+
+from django.contrib import messages
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+
+
+def login_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email').lower()
+        password = request.POST.get('password')
+
+        # Check if the user already exists in the database
+        user = User.objects.filter(email=email).first()
+
+        if user:
+            # If the user exists, authenticate and log them in
+            authenticated_user = authenticate(request, username=user.username, password=password)
+            if authenticated_user is not None:
+                login(request, authenticated_user)
+                return redirect('home')  # Redirect to the home page upon successful login
+            else:
+                return render(request, 'registration/login.html', {'error_message': 'Invalid email or password. Please try again.'})
+        else:
+            # If the user does not exist, create a new user and log them in
+            new_user = User.objects.create_user(username=email, email=email, password=password)
+            login(request, new_user)
+            return redirect('home')  # Redirect to the home page upon successful registration
+
+    return render(request, 'registration/login.html')
+
+
+def home(request):
+    return render(request, 'registration/home.html')
+
+
+from .forms import ImageUploadForm
+
+def upload_image(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Save the uploaded image
+            uploaded_image = form.save()
+            # Perform any additional logic with the uploaded image
+            # ...
+            return redirect('calculate')
+    else:
+        form = ImageUploadForm()
+
+    return render(request, 'registration/home.html', {'form': form})
+
+
+
+# views.py
+from django.shortcuts import render
+from .forms import WasteDataForm
+
+emission_factors = {
+    'plastic': 0.1,  # Example emission factors for different waste types
+    'paper': 0.05,
+    'metal': 0.2
+    # Add more emission factors for other waste types as needed
+}
+
+
+def calculate(request):
+    if request.method == 'POST':
+        form = WasteDataForm(request.POST)
+        if form.is_valid():
+            waste_data = {}
+            total_emissions = 0
+            for waste_type, emission_factor in emission_factors.items():
+                quantity = form.cleaned_data.get(waste_type, 0)
+                waste_data[waste_type] = quantity
+                emissions = emission_factor * quantity
+                total_emissions += emissions
+            return render(request, 'registration/result.html', {'waste_data': waste_data, 'total_emissions': total_emissions})
+    else:
+        form = WasteDataForm()
+
+    return render(request, 'registration/result.html', {'form': form})
+
+
+def calculate_credit(request):
+    # Handle credit calculation logic here
+    # ...
+
+    return redirect('calculate')
+
+
+def logout_view(request):
+    # Logout logic here
+    # ...
+    return redirect('signup')  # Assuming you have a URL pattern named 'signup'.
+
+
+# views.py
+from django.shortcuts import render
+from .models import CarbonCredit
+from .forms import CarbonCreditForm
+
+def user_carbon_credits(request):
+    if request.method == 'POST':
+        form = CarbonCreditForm(request.POST)
+        if form.is_valid():
+            credits = form.cleaned_data['credits']
+            # Get the current user
+            user = request.user
+            # Update or create carbon credit data for the user
+            carbon_credit, created = CarbonCredit.objects.get_or_create(user=user)
+            carbon_credit.credits += credits
+            carbon_credit.save()
+            return render(request, 'registration/success_template.html', {'message': 'Carbon credits updated successfully!'})
+    else:
+        form = CarbonCreditForm()
+    return render(request, 'registration/carbon_credit_form.html', {'form': form})
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+
+image_path = "paper15.jpg"
+class_names = ['battery', 'biological', 'brown-glass', 'cardboard', 'clothes', 'green-glass', 'metal', 'paper', 'plastic', 'shoes', 'trash', 'white-glass']
+from flask import Flask, request, jsonify
+#from tensorflow.keras.preprocessing import image
+#from tensorflow.keras.models import load_model
+import numpy as np
+import json
+def predict_class(request):
+    # img = image.load_img(image_path, target_size=(224, 224))
+    # img = image.img_to_array(img)
+    # img = np.expand_dims(img, axis=0)
+    # img = img / 255.0  # Normalize the image
+    #
+    # # Make predictions
+    # predictions = model.predict(img)
+    # # Get the class with the highest probability
+    # predicted_class = np.argmax(predictions)
+    # predicted_class_name = class_names[predicted_class]
+    # return predicted_class_name
+    return redirect('home')
+
+from django.shortcuts import render
+
+from django.shortcuts import render
+
+def user_profile(request):
+    # Logic to fetch user information and carbon credits (replace with your actual logic)
+    #user_info = get_user_info(request.user)  # Replace with your logic to fetch user info
+    #arbon_credits = get_carbon_credits(request.user)  # Replace with your logic to fetch carbon credits
+
+    context = {
+        # 'user_info': "Amit Saxena",
+        'carbon_credits': 100,
+    }
+
+    return render(request, 'registration/user_profile.html', user_carbon_credits)
+
+
+def user_trade(request):
+    return render(request, 'registration/upload.html')
+
+
+
+

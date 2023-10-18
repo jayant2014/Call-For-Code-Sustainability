@@ -1,5 +1,4 @@
-from flask import Flask, render_template, ...
-...
+from flask import Flask, request, app, jsonify, render_template, url_for
 
 @app.route('/')
 def home():

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add your head content here -->
+    <title>Home</title>
+    <style>
+        .container {
+            max-width: 500px;
+            background-color: rgba(355, 355, 355, 0.8); /* Add a semi-transparent white background to the container */
+            padding: 80px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add custom styles for the form */
+      .form-container {
+          max-width: 500px;
+          background-color: rgba(255, 255, 255, 0.8);
+          padding: 40px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+          margin-right: 20px; /* Adjust the right margin as needed */
+      }
+        /* Add background image to the body */
+body {
+    background-image: url('/media/best.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5 float-right form-container">
+        <a href="{% url 'logout' %}" class="btn btn-secondary float-right">Logout</a>
+        <h1 class="mb-4">Home</h1>
+
+        <!-- Image Upload Form -->
+        <form action="{% url 'upload_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="image">Upload Image:</label>
+                <input type="file" class="form-control" name="image" required>
+            </div>
+
+        </form>
+
+        <!-- Form for calculating carbon credit based on quantity -->
+        <form action="{% url 'calculate_credit' %}" method="post" class="mt-4">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="quantity">Wastage Quantity:</label>
+                <input type="text" class="form-control" name="quantity" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate Carbon Credit</button>
+        </form>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js scripts (for Bootstrap functionality) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

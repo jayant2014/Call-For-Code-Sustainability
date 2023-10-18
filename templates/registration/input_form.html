@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Data Input</title>
+    <!-- Add any CSS styles or links to CSS files if needed -->
+</head>
+
+<body>
+    <h1>Enter Waste Data</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Calculate Emissions</button>
+    </form>
+</body>
+
+</html>
