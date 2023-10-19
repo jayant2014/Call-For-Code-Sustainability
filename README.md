@@ -3,7 +3,7 @@ Sustainable Living Platform
 Welcome to our Sustainable Living Platform project! This platform aims to promote sustainable practices and environmental awareness. Users can monitor their carbon footprint, track waste management, and contribute to environmental initiatives. Below, you'll find information about the project structure, functionalities, and how to get started.
 ![image](https://github.com/amitsaxena9225/CallForCoding/assets/32059302/99db3355-0685-45c9-a041-d96b77f3db26)
 
-**Project Overview :**
+**Project Overview:**
 The Sustainable Living Platform is a web application built using Django, a high-level Python web framework. It incorporates various features to encourage sustainable living practices and carbon emissions reduction. 
 ![image](https://github.com/jayant2014/Call-For-Code-Sustainability/assets/12426734/17d00923-a45f-406c-83ee-10a2dfbe68f1)
 
@@ -101,18 +101,20 @@ python manage.py migrate
 
 Create a Superuser (Admin):
 
-
+```
 python manage.py createsuperuser
+```
+
 Run the Development Server:
-
-
+```
 python manage.py runserver
+```
 **Access the Application:**
 
-Open your web browser and go to http://localhost:8000.
+Open your web browser and go to **http://localhost:8000**.
 Use the admin interface at http://localhost:8000/admin/ to manage users and other data.
 
-Usage
+***Usage***
 **User Authentication:**
 Users can sign up, log in, and manage their profiles.
 After logging in, users can access various features like carbon footprint tracking, waste management, and carbon credit information.
