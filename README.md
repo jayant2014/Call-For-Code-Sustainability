@@ -130,6 +130,8 @@ The system calculates carbon emissions based on waste types and quantities.
 **Carbon Credits and Trading:**
 Users earn carbon credits based on their sustainable practices.
 Earned credits can be used for environmental initiatives or traded within the platform.
+![image](https://github.com/jayant2014/Call-For-Code-Sustainability/assets/12426734/b933500e-5f92-4edf-9347-089ccaa8c6e4)
+
 
 **Machine Learning Integration:**
 Users can upload images of waste items, and machine learning models predict waste types.
