@@ -13,8 +13,6 @@ The application includes:
 Users can sign up, log in, and manage their profiles.
 User profiles include information about their carbon credits and other sustainability-related activities.
 
-![image](https://github.com/jayant2014/Call-For-Code-Sustainability/assets/12426734/2817d6d6-3c95-4887-a4a2-902f6a0b8aea)
-
 **Carbon Footprint Tracking:**
 Users can track their carbon footprint by inputting data related to their daily activities.
 Emission factors for different waste types are used to calculate carbon emissions.
