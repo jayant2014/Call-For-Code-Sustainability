@@ -18,6 +18,7 @@ urlpatterns = [
     path('user_trade/', views.user_trade, name='user_trade'),
     path('profile/', views.user_profile, name='user_profile'),
     path('success_template/',views.success_template, name ='success_template'),
+    path('predict_class/', views.predict_class, name='predict_class'),
 
 
 
