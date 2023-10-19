@@ -105,19 +105,45 @@ def home(request):
 
 from .forms import ImageUploadForm
 
-def upload_image(request):
-    if request.method == 'POST':
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Save the uploaded image
-            uploaded_image = form.save()
-            # Perform any additional logic with the uploaded image
-            # ...
-            return redirect('calculate')
-    else:
-        form = ImageUploadForm()
+from django.contrib import messages
 
-    return render(request, 'registration/home.html', {'form': form})
+import os
+from datetime import datetime
+from django.shortcuts import render, redirect
+from .forms import ImageUploadForm
+from .models import UploadedImage
+from django.contrib.auth.decorators import login_required
+
+#@login_required  # Ensure the user is logged in to access this view
+# imageupload/views.py
+
+from django.shortcuts import render, redirect
+from .forms import ImageUploadForm
+
+from django.shortcuts import render, redirect
+from .forms import ImageUploadForm
+
+import os
+from django.conf import settings
+from django.http import JsonResponse
+
+def upload_image(request):
+    if request.method == 'POST' and request.FILES['image']:
+        uploaded_file = request.FILES['image']
+        file_name = uploaded_file.name
+
+        # Save the uploaded file to the 'uploads' folder
+        file_path = os.path.join(settings.MEDIA_ROOT, file_name)
+        with open(file_path, 'wb+') as destination:
+            for chunk in uploaded_file.chunks():
+                destination.write(chunk)
+
+
+        return redirect('success_template')
+    else:
+        return redirect('home')
+
+
 
 
 
@@ -228,7 +254,11 @@ def user_profile(request):
 
 
 def user_trade(request):
-    return render(request, 'registration/upload.html')
+    return render(request, 'registration/home.html')
+
+def success_template(request):
+    return render(request, 'registration/success_template.html')
+
 
 
 

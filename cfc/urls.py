@@ -17,8 +17,17 @@ urlpatterns = [
     path('user_carbon_credits/', views.user_carbon_credits, name='user_carbon_credits'),
     path('user_trade/', views.user_trade, name='user_trade'),
     path('profile/', views.user_profile, name='user_profile'),
+    path('success_template/',views.success_template, name ='success_template'),
+
+
+
 
 ]
+from django.conf import settings
+from django.conf.urls.static import static
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 from django.conf import settings
 from django.conf.urls.static import static
 

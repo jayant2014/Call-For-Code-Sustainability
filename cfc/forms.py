@@ -11,8 +11,8 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
-class ImageUploadForm(forms.Form):
-    image = forms.ImageField()
+# class ImageUploadForm(forms.Form):
+#     image = forms.ImageField()
 
 class CombinedUploadForm(forms.Form):
     image = forms.ImageField()
@@ -30,13 +30,28 @@ class CarbonCreditForm(forms.Form):
     credits = forms.IntegerField()
     # Add more form fields corresponding to your model fields
 
+
+
+from django import forms
+from .models import UploadedImage
+
+from django import forms
+from .models import UploadedImage
+
+# imageupload/forms.py
+
 from django import forms
 from .models import UploadedImage
 
 class ImageUploadForm(forms.ModelForm):
     class Meta:
         model = UploadedImage
-        fields = ['image']
+        fields = ('image', )
+
+
+
+
+
 
 
 
