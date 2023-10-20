@@ -35,18 +35,6 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-
-
-# def user_login(request):
-#     if request.method == 'POST':
-#         email = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(request, email=email, password=password)
-#         if user:
-#             login(request, user)
-#             return redirect('registration/home1.html')
-#     return render(request, 'registration/login.html')
-
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
@@ -57,20 +45,6 @@ from django.contrib import messages
 
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
-
-
-# def user_login(request):
-#     if request.method == 'POST':
-#         email = request.POST['email']  # 'email' corresponds to the name attribute in the form input field
-#         password = request.POST['password']
-#         user = authenticate(request, email=email, password=password)
-#         if user:
-#             login(request, user)
-#             return redirect('home')  # Redirect to the home page after successful login
-#         else:
-#             messages.error(request, 'Invalid email or password. Please try again.')  # Display error message
-#     return render(request, 'registration/login.html')
-
 from django.contrib import messages
 
 from django.shortcuts import render, redirect
@@ -121,9 +95,6 @@ from .forms import ImageUploadForm
 from .models import UploadedImage
 from django.contrib.auth.decorators import login_required
 
-#@login_required  # Ensure the user is logged in to access this view
-# imageupload/views.py
-
 from django.shortcuts import render, redirect
 from .forms import ImageUploadForm
 
@@ -149,10 +120,6 @@ def upload_image(request):
         return redirect('success_template')
     else:
         return redirect('home')
-
-
-
-
 
 # views.py
 from django.shortcuts import render
@@ -240,22 +207,11 @@ from rest_framework.response import Response
 image_path = "paper15.jpg"
 class_names = ['battery', 'biological', 'brown-glass', 'cardboard', 'clothes', 'green-glass', 'metal', 'paper', 'plastic', 'shoes', 'trash', 'white-glass']
 from flask import Flask, request, jsonify
-#from tensorflow.keras.preprocessing import image
-#from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.models import load_model
 import numpy as np
 import json
 def predict_class(request):
-    # img = image.load_img(image_path, target_size=(224, 224))
-    # img = image.img_to_array(img)
-    # img = np.expand_dims(img, axis=0)
-    # img = img / 255.0  # Normalize the image
-    #
-    # # Make predictions
-    # predictions = model.predict(img)
-    # # Get the class with the highest probability
-    # predicted_class = np.argmax(predictions)
-    # predicted_class_name = class_names[predicted_class]
-    # return predicted_class_name
     return redirect('home')
 
 from django.shortcuts import render
@@ -263,9 +219,6 @@ from django.shortcuts import render
 from django.shortcuts import render
 
 def user_profile(request):
-    # Logic to fetch user information and carbon credits (replace with your actual logic)
-    #user_info = get_user_info(request.user)  # Replace with your logic to fetch user info
-    #arbon_credits = get_carbon_credits(request.user)  # Replace with your logic to fetch carbon credits
 
     context = {
         # 'user_info': "Amit Saxena",
