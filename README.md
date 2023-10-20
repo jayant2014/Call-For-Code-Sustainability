@@ -1,5 +1,6 @@
 ﻿**Project:**
 Sustainable Living Platform
+Presentation Video https://www.youtube.com/watch?v=j4tbnlZIVEQ
 Welcome to our Sustainable Living Platform project! This platform aims to promote sustainable practices and environmental awareness. Users can monitor their carbon footprint, track waste management, and contribute to environmental initiatives. Below, you'll find information about the project structure, functionalities, and how to get started.
 ![image](https://github.com/amitsaxena9225/CallForCoding/assets/32059302/99db3355-0685-45c9-a041-d96b77f3db26)
 
